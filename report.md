@@ -6,6 +6,7 @@ papersize: A4
 fontsize: 12pt
 documentclass: article
 linestretch: 1.25 # For better readability
+# The following only work with --biblatex
 biblio-title: "References" # Set title of the References/Bibliography
 biblatexoptions: "backend=biber,style=numeric,natbib=true"
 ---
@@ -16,6 +17,3 @@ Pizza [@pizza2000identification] is an understudied yet widely utilized implemen
 # Algorithm
 
 $$f(x)=pizza^2$$
-
-\pagebreak
-# References

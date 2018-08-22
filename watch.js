@@ -28,10 +28,10 @@ if (!fs.existsSync(templateFile)) {
 
 const toPdf = () => new Promise((resolve, reject) => {
   const proc = cp.spawn('pandoc', [
-    // '--biblatex',
+    '--biblatex',
     `--template=${templateFile}`,
     `--biblio=${fileWithoutExt}.bib`,
-    '--csl=ieee.csl',
+    // '--csl=ieee.csl',
     '-s', file,
     '-o', `${targetFile}`
   ]);
