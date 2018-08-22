@@ -2,6 +2,10 @@
 title: "Title of this Paper"
 author: "Your Name"
 geometry: margin=2.54cm
+papersize: A4
+biblatexoptions: "backend=biber,style=numeric,natbib=true"
+header-includes:
+    - \renewcommand{\baselinestretch}{1.25} # For better readability
 ---
 
 # Abstract
