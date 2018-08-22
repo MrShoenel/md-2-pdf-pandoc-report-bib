@@ -16,12 +16,21 @@ const fs = require('fs')
 , fileWithoutExt = fileBase.substr(
     0, fileBase.length - path.extname(fileBase).length)
 , targetFile = path.resolve(path.join(filePath, `${fileWithoutExt}.pdf`))
-, dbncSecs = argv.length > 3 ? parseInt(argv[3], 10) : 2;
+, dbncSecs = argv.length > 3 ? parseInt(argv[3], 10) : 2
+, templateFile = path.resolve(path.join(__dirname, 'template.latex'));
+
+
+if (!fs.existsSync(templateFile)) {
+  console.log('Generating template file..');
+  cp.execSync(`pandoc -D latex > ${templateFile}`);
+}
+
 
 const toPdf = () => new Promise((resolve, reject) => {
   const proc = cp.spawn('pandoc', [
+    `--template=${templateFile}`,
     `--biblio=${fileWithoutExt}.bib`,
-    '--csl=ieee.csl',
+    // '--csl=ieee.csl',
     '-s', file,
     '-o', `${targetFile}`
   ]);
