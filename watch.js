@@ -28,9 +28,10 @@ if (!fs.existsSync(templateFile)) {
 
 const toPdf = () => new Promise((resolve, reject) => {
   const proc = cp.spawn('pandoc', [
+    // '--biblatex',
     `--template=${templateFile}`,
     `--biblio=${fileWithoutExt}.bib`,
-    // '--csl=ieee.csl',
+    '--csl=ieee.csl',
     '-s', file,
     '-o', `${targetFile}`
   ]);
@@ -57,7 +58,22 @@ const log = (msg, success) => {
 };
 
 
-let timeout = null;
+const timeoutFunc = async() => {
+  try {
+    console.log(`Attempting pandoc conversion\n- ${fileBase} <<==>> ${path.basename(targetFile)}..`);
+    await toPdf();
+    log(`Created:\n- ${targetFile}`, true)
+    console.log();
+  } catch (e) {
+    log(`Error:\n- ${e}`, false);
+  }
+};
+
+
+let timeout = setTimeout(async() => {
+  await timeoutFunc();
+}, 1);
+
 fs.watchFile(file, (_, __) => {
   console.log(`Detected change to file ${fileBase}..`);
   if (timeout !== null) {
@@ -66,14 +82,7 @@ fs.watchFile(file, (_, __) => {
   }
 
   timeout = setTimeout(async() => {
-    try {
-      console.log(`Attempting pandoc conversion\n- ${fileBase} <<==>> ${path.basename(targetFile)}..`);
-      await toPdf();
-      log(`Created:\n- ${targetFile}`, true)
-      console.log();
-    } catch (e) {
-      log(`Error:\n- ${e}`, false);
-    }
+    await timeoutFunc();
   }, dbncSecs * 1e3);
 });
 
