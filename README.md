@@ -7,4 +7,4 @@ A markdown template that supports to-pdf conversion using pandoc and biblatex, u
 2. Add _biblatex_ references to `report.bib`
 3. Write report in `report.md`
 4. [Optional] If you haven't watched the report.md for changes, you may run
-   * `pandoc --biblio=report.bib --csl=ieee.csl -s readme.md -o readme.pdf`
+   * `pandoc --biblio=report.bib --csl=ieee.csl -s report.md -o report.pdf`
