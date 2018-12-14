@@ -4,6 +4,7 @@
 # header-includes:
 #	- \usepackage{titlesec}
 #	- \titlelabel{\thetitle.\quad}
+#	- \setlength{\columnsep}{3em} # defines the width of the gap for multi-column layouts
 
 title: "Title of this Paper"
 author: "Your Name; \\today"
